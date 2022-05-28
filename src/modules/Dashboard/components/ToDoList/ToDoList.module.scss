@@ -1,15 +1,18 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+
 .addTodo {
+  margin-top: 25px;
   display: flex;
   column-gap: 16px;
-
 }
 
-.toDoList {
-  display: block;
-  column-gap: 16px;
-}
+.toDoList {}
 
 .listElement {
-
-  background-color: blue;
+  max-width: 500px;
+  border: solid 1px black;
+  margin-top: 10px;
 }
