@@ -7,12 +7,15 @@ body {
   margin-top: 25px;
   display: flex;
   column-gap: 16px;
+
+  .inputBox {
+    background-color: #90a4ae;
+  }
 }
 
-.toDoList {}
-
 .listElement {
-  max-width: 500px;
   border: solid 1px black;
   margin-top: 10px;
+  background-color: #62757f;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
