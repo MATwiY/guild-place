@@ -29,9 +29,15 @@ export const ToDoList: React.FC = () => {
               value={message} onChange={(event) => setMessage(event.target.value)}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton color="primary" sx={{ p: '10px' }} size="large"
+            <IconButton sx={{ p: '10px' }} size="large"
               className={styles.addTodoButton}
-              onClick={() => { if (message != "" || !/^[ ]*$/.test(message)) { setMessages((prev) => [...prev, message]); setMessage("") } }}>
+              onClick={() => {
+                if (message != " " && message.trim().length > 0) {
+                  setMessages((prev) => [...prev, message]); setMessage("")
+                } else {
+                  setMessage("");
+                }
+              }}>
               <AddIcon fontSize="inherit" />
             </IconButton>
           </Paper>

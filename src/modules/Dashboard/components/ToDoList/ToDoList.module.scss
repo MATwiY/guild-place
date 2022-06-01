@@ -7,15 +7,24 @@ body {
   margin-top: 25px;
   display: flex;
   column-gap: 16px;
+  color: white;
 
   .inputBox {
-    background-color: #90a4ae;
+    background-color: #5e5b5b;
+
+    ::placeholder {
+      color: white;
+    }
+  }
+
+  .addTodoButton {
+    color: #FFA62B;
   }
 }
 
 .listElement {
-  border: solid 1px black;
   margin-top: 10px;
-  background-color: #62757f;
+  background-color: #383431;
+  color: white;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
