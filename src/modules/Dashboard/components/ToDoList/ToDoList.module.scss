@@ -1,15 +1,13 @@
-.addTodo {
+.todoWrapper {
   display: flex;
-  column-gap: 16px;
+  flex-direction: column;
+  margin: auto;
+  .addTodo {
+    display: flex;
+    column-gap: 16px;
+  }
 
-}
-
-.toDoList {
-  display: block;
-  column-gap: 16px;
-}
-
-.listElement {
-
-  background-color: blue;
+  .toDoList {
+    max-width: 400px;
+  }
 }
