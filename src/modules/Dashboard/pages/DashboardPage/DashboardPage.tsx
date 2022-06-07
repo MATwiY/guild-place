@@ -8,7 +8,6 @@ import styles from "./DashboardPage.module.scss";
 export const DashboardPage: React.FC = () => {
   return (
     <>
-
       <Grid height="100%" container justifyContent="center" spacing={2}>
         <Grid item xs={4}>
           <Weather />
