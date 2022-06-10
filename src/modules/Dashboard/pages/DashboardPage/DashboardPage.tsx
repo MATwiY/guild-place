@@ -4,7 +4,6 @@ import { ToDoList } from "../../components/ToDoList";
 import { Weather } from "../../components/Weather";
 import styles from "./DashboardPage.module.scss";
 
-
 export const DashboardPage: React.FC = () => {
   return (
     <>

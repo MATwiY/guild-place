@@ -29,7 +29,6 @@ export const ToDoList: React.FC = () => {
 
   return (
     <>
-
       <div className={styles.addTodo}>
         <Paper
           className={styles.inputBox}
