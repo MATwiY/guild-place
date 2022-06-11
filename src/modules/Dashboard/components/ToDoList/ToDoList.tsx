@@ -14,6 +14,7 @@ import {
 import React, { useState } from "react";
 import styles from "./ToDoList.module.scss";
 import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from '@mui/icons-material/Search';
 import { useGetTodos } from "../../hooks/useGetTodos";
 
 export const ToDoList: React.FC = () => {
@@ -26,6 +27,7 @@ export const ToDoList: React.FC = () => {
 
   const [message, setMessage] = useState<string>("");
   const todosQuery = useGetTodos();
+  const [searchValue, setSearch] = useState("");
 
   return (
     <>
@@ -51,6 +53,18 @@ export const ToDoList: React.FC = () => {
           <IconButton
             sx={{ p: "10px" }}
             size="large"
+            className={styles.searchButton}
+            onClick={() => {
+              setSearch(message);
+            }}
+          >
+            <SearchIcon fontSize="inherit" />
+          </IconButton>
+
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <IconButton
+            sx={{ p: "10px" }}
+            size="large"
             className={styles.addTodoButton}
             onClick={() => {
               if (message.trim().length > 0) {
@@ -67,7 +81,7 @@ export const ToDoList: React.FC = () => {
       </div>
 
       <List className={styles.toDoList}>
-        {todosQuery.data?.map((todoItem, i) => (
+        {todosQuery.data?.filter(val => val.title.toLowerCase().includes(searchValue.toLowerCase())).map((todoItem, i) => (
           <ListItem
             className={styles.listElement}
             key={`${todoItem.title}-${i}`}
