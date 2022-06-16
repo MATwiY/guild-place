@@ -1,21 +1,19 @@
 import {
   Divider,
-  Grid,
   IconButton,
   InputBase,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-  makeStyles,
   Paper,
-  TextField,
 } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./ToDoList.module.scss";
 import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import { useGetTodos } from "../../hooks/useGetTodos";
+import { useSearchParams } from "react-router-dom";
 
 export const ToDoList: React.FC = () => {
   const [messages, setMessages] = useState([
@@ -27,7 +25,9 @@ export const ToDoList: React.FC = () => {
 
   const [message, setMessage] = useState<string>("");
   const todosQuery = useGetTodos();
-  const [searchValue, setSearch] = useState("");
+  //const [searchValue, setSearch] = useState("");
+  const [searchValue, setSearch] = useSearchParams();
+  const searchInput = searchValue.get("search") || "";
 
   return (
     <>
@@ -55,7 +55,7 @@ export const ToDoList: React.FC = () => {
             size="large"
             className={styles.searchButton}
             onClick={() => {
-              setSearch(message);
+              setSearch({ search: message });
             }}
           >
             <SearchIcon fontSize="inherit" />
@@ -81,20 +81,24 @@ export const ToDoList: React.FC = () => {
       </div>
 
       <List className={styles.toDoList}>
-        {todosQuery.data?.filter(val => val.title.toLowerCase().includes(searchValue.toLowerCase())).map((todoItem, i) => (
-          <ListItem
-            className={styles.listElement}
-            key={`${todoItem.title}-${i}`}
-            divider
-          >
-            <ListItemButton>
-              <ListItemText
-                primary={todoItem.title}
-                sx={{ wordBreak: "break-word" }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {todosQuery.data
+          ?.filter((val) =>
+            val.title.toLowerCase().includes(searchInput.toLowerCase())
+          )
+          .map((todoItem, i) => (
+            <ListItem
+              className={styles.listElement}
+              key={`${todoItem.title}-${i}`}
+              divider
+            >
+              <ListItemButton>
+                <ListItemText
+                  primary={todoItem.title}
+                  sx={{ wordBreak: "break-word" }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
       </List>
     </>
   );
