@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { DashboardPage } from "./modules/Dashboard/pages";
+import { WelcomePage } from "./modules/Welcome/pages/WelcomePage";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -10,7 +11,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <DashboardPage />
+    <WelcomePage />
   </React.StrictMode>
 );
 
