@@ -13,10 +13,11 @@
 }
 
 .welcomeText {
-  position: relative;
+  position: flex;
+  width: 40%;
   text-align: center;
   padding-top: 15%;
-
+  margin: auto;
   h1 {
     font-size: 3em;
     color: white;
@@ -33,7 +34,7 @@
 
 .welcomeButtons {
   position: relative;
-  top: 12%;
+  top: 10%;
   animation: Slide-up 1.5s ease;
   animation-fill-mode: backwards;
   animation-delay: 0.6s;
