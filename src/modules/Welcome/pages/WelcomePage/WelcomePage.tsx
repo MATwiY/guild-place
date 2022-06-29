@@ -1,8 +1,15 @@
-import { BottomNavigation, Box, Button, Container, Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./WelcomePage.module.scss";
 
 export const WelcomePage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const navigateToRegisterPage = () => {
+    navigate("/register");
+  };
+
   return (
     <div className={styles.backgroundPlace}>
       <div className={styles.welcomeText}>
@@ -20,7 +27,11 @@ export const WelcomePage: React.FC = () => {
           justifyContent="center"
           alignItems="flex-end"
         >
-          <Button variant="contained" size="large">
+          <Button
+            variant="contained"
+            size="large"
+            onClick={navigateToRegisterPage}
+          >
             REGISTER
           </Button>
           <Button variant="contained" size="large">
