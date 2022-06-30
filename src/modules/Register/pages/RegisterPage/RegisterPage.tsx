@@ -1,4 +1,11 @@
-import { Button, createTheme, Grid, styled, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Stack,
+  styled,
+  TextField,
+} from "@mui/material";
 import React, { useState } from "react";
 import styles from "./RegisterPage.module.scss";
 
@@ -19,19 +26,9 @@ const CustomTextField = styled(TextField)({
 export const RegisterPage: React.FC = () => {
   const [formValues, setFormValues] = useState(defaultValues);
 
-  const handleLoginChange = (e: any) => {
+  const handleFormChange = (e: any) => {
     const { value } = e.target;
-    setFormValues({ ...formValues, login: value });
-  };
-
-  const handlePasswordChange = (e: any) => {
-    const { value } = e.target;
-    setFormValues({ ...formValues, password: value });
-  };
-
-  const handleEmailChange = (e: any) => {
-    const { value } = e.target;
-    setFormValues({ ...formValues, email: value });
+    setFormValues({ ...formValues, [e.target.name]: value });
   };
 
   const handleSubmit = (e: any) => {
@@ -42,71 +39,76 @@ export const RegisterPage: React.FC = () => {
   return (
     <div className={styles.formDiv}>
       <form onSubmit={handleSubmit}>
-        <Grid
-          container
-          alignItems="center"
-          justifyItems="center"
+        <Stack
           direction="column"
           spacing={3}
+          alignItems="center"
+          justifyContent="center"
         >
-          <Grid item>
-            <CustomTextField
-              required
-              id="login-required"
-              name="login"
-              type="text"
-              variant="filled"
-              label="Login"
-              value={formValues.login}
-              onChange={handleLoginChange}
-              InputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "#A8BAF7" } }}
-            />
-          </Grid>
-          <Grid item>
-            <CustomTextField
-              required
-              id="password-required"
-              name="password"
-              type="password"
-              variant="filled"
-              label="Password"
-              value={formValues.password}
-              onChange={handlePasswordChange}
-              InputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "#A8BAF7" } }}
-            />
-          </Grid>
-          <Grid item>
-            <CustomTextField
-              required
-              id="email-required"
-              name="email"
-              type="text"
-              variant="filled"
-              label="Email"
-              value={formValues.email}
-              onChange={handleEmailChange}
-              InputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "#A8BAF7" } }}
-            />
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              type="submit"
-              className={styles.SubButton}
-              size="large"
-            >
-              SUBMIT
-            </Button>
-          </Grid>
-        </Grid>
+          <CustomTextField
+            variant="filled"
+            name="login"
+            type="text"
+            label="Login"
+            value={formValues.login}
+            onChange={handleFormChange}
+            InputProps={{
+              style: { color: "white" },
+            }}
+            InputLabelProps={{ style: { color: "#A8BAF7" } }}
+          />
+
+          <CustomTextField
+            variant="filled"
+            name="password"
+            type="text"
+            label="Password"
+            value={formValues.password}
+            onChange={handleFormChange}
+            InputProps={{
+              style: { color: "white" },
+            }}
+            InputLabelProps={{ style: { color: "#A8BAF7" } }}
+          />
+
+          <CustomTextField
+            variant="filled"
+            name="email"
+            type="text"
+            label="Email"
+            value={formValues.email}
+            onChange={handleFormChange}
+            InputProps={{
+              style: { color: "white" },
+            }}
+            InputLabelProps={{ style: { color: "#A8BAF7" } }}
+          />
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                sx={{
+                  color: "#505975",
+                  "&.Mui-checked": {
+                    color: "#A8BAF7",
+                  },
+                }}
+              />
+            }
+            label="I accept the terms of service"
+            className={styles.checkText}
+          />
+
+          <Button
+            variant="contained"
+            type="submit"
+            className={styles.SubButton}
+            size="large"
+          >
+            SUBMIT
+          </Button>
+        </Stack>
       </form>
     </div>
   );
 };
-
-// login
-// email
-// password
