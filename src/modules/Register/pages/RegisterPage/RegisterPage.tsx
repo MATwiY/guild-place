@@ -1,33 +1,32 @@
 import {
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
   FormHelperText,
   Stack,
-  styled,
-  TextField,
 } from "@mui/material";
 import React from "react";
-import styles from "./RegisterPage.module.scss";
+
 import { Formik } from "formik";
 import validationSchema from "./ValidationSchema";
-
-const CustomTextField = styled(TextField)({
-  backgroundColor: "#505975",
-  opacity: 0.9,
-  borderRadius: 5,
-  borderColor: "rgba(0, 0, 0, 0)",
-  width: "300px",
-}) as typeof TextField;
+import {
+  StyledTextField,
+  StyledButton,
+  StyledBackground,
+} from "../../../shared/StyledComponents";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
+  const navigateBackToWelcome = () => {
+    navigate("/");
+  };
   const handleSubmit = (values: any, errors: any) => {
     console.log(values, errors);
   };
 
   return (
-    <div className={styles.formDiv}>
+    <StyledBackground>
       <Formik
         initialValues={{
           username: "",
@@ -55,8 +54,9 @@ export const RegisterPage: React.FC = () => {
                 spacing={3}
                 alignItems="center"
                 justifyContent="center"
+                marginTop="15%"
               >
-                <CustomTextField
+                <StyledTextField
                   error={touched.username && Boolean(errors.username)}
                   variant="filled"
                   name="username"
@@ -66,29 +66,21 @@ export const RegisterPage: React.FC = () => {
                   value={values.username}
                   onChange={handleChange("username")}
                   onBlur={handleBlur("username")}
-                  InputProps={{
-                    style: { color: "white" },
-                  }}
-                  InputLabelProps={{ style: { color: "#A8BAF7" } }}
                 />
 
-                <CustomTextField
+                <StyledTextField
                   error={touched.password && Boolean(errors.password)}
                   variant="filled"
                   name="password"
-                  type="text"
+                  type="password"
                   label="Password"
                   helperText={touched.password ? errors.password : ""}
                   value={values.password}
                   onChange={handleChange("password")}
                   onBlur={handleBlur("password")}
-                  InputProps={{
-                    style: { color: "white" },
-                  }}
-                  InputLabelProps={{ style: { color: "#A8BAF7" } }}
                 />
 
-                <CustomTextField
+                <StyledTextField
                   error={touched.email && Boolean(errors.email)}
                   variant="filled"
                   name="email"
@@ -98,10 +90,6 @@ export const RegisterPage: React.FC = () => {
                   value={values.email}
                   onChange={handleChange("email")}
                   onBlur={handleBlur("email")}
-                  InputProps={{
-                    style: { color: "white" },
-                  }}
-                  InputLabelProps={{ style: { color: "#A8BAF7" } }}
                 />
 
                 <FormControl
@@ -122,26 +110,32 @@ export const RegisterPage: React.FC = () => {
                       />
                     }
                     label="I accept the terms of service"
-                    className={styles.checkText}
+                    sx={{
+                      color: "#A8BAF7",
+                    }}
                   />
                   <FormHelperText>
                     {touched.acceptTOS ? errors.acceptTOS : ""}
                   </FormHelperText>
                 </FormControl>
 
-                <Button
-                  variant="contained"
-                  type="submit"
-                  className={styles.SubButton}
-                  size="large"
-                >
-                  SUBMIT
-                </Button>
+                <Stack direction="row" spacing={3}>
+                  <StyledButton
+                    variant="contained"
+                    onClick={navigateBackToWelcome}
+                  >
+                    Back
+                  </StyledButton>
+
+                  <StyledButton variant="contained" type="submit">
+                    SUBMIT
+                  </StyledButton>
+                </Stack>
               </Stack>
             </form>
           );
         }}
       </Formik>
-    </div>
+    </StyledBackground>
   );
 };
