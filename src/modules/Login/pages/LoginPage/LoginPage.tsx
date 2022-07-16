@@ -1,39 +1,15 @@
 import React, { useState } from "react";
-import styles from "./LoginPage.module.scss";
+import { Stack } from "@mui/material";
+
 import {
-  Button,
-  createTheme,
-  Stack,
-  TextField,
-  ThemeProvider,
-} from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+  StyledButton,
+  StyledTextField,
+  StyledBackground,
+} from "../../../shared/StyledComponents";
+
 import { useNavigate } from "react-router-dom";
-
-// send background image to index.tsx (root)
-// for smooth transition between welcomePage loginPage and RegisterPage
-
-const theme = createTheme({
-  palette: {
-    text: {
-      primary: "white",
-      secondary: "#000",
-    },
-
-    action: {
-      active: "rgba(0, 0, 0, 0)",
-      hover: "rgba(1,1,1,0)",
-      disabled: "#fff",
-    },
-  },
-});
-
-const CustomTextField = styled(TextField)({
-  backgroundColor: "#42a5f5",
-  opacity: 0.8,
-  borderRadius: 4,
-  borderColor: "rgba(0, 0, 0, 0)",
-}) as typeof TextField;
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 export const LoginPage: React.FC = () => {
   const [formValue, setFormValue] = useState({
@@ -47,16 +23,15 @@ export const LoginPage: React.FC = () => {
     navigate("/");
   };
 
-  const onTextChange = (e: any) => {
+  const onLoginChange = (e: any) => {
     const updatedValue = { login: e.target.value };
-
     setFormValue((formValue) => ({
       ...formValue,
       ...updatedValue,
     }));
   };
 
-  const onPassChange = (e: any) => {
+  const onPasswordChange = (e: any) => {
     const updatedValue = { password: e.target.value };
 
     setFormValue((formValue) => ({
@@ -65,74 +40,90 @@ export const LoginPage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log(`Login: ${formValue.login}`, `Password: ${formValue.password}`);
+  const handleSubmit = (values: any, errors: any) => {
+    console.log(values, errors);
   };
 
+  const validationSchema = Yup.object().shape({
+    login: Yup.string().required("Need it").min(3, "Too short"),
+    password: Yup.string().required("Need it").min(6, "Too short"),
+  });
+
   return (
-    <>
-      <div className={styles.backgroundPlace}>
-        <div className={styles.loginForm}>
-          <Stack
-            spacing={2}
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <ThemeProvider theme={theme}>
-              <CustomTextField
-                label="Login"
-                variant="filled"
-                InputLabelProps={{
-                  style: { color: "#fff" },
-                }}
-                onChange={onTextChange}
-                value={formValue.login}
-              />
+    <StyledBackground>
+      <Formik
+        initialValues={{ login: "", password: "" }}
+        onSubmit={(values, errors) => {
+          handleSubmit(values, errors);
+        }}
+        validationSchema={validationSchema}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleSubmit,
+          handleChange,
+          handleBlur,
+        }) => {
+          return (
+            <form onSubmit={handleSubmit}>
+              <Stack
+                spacing={3}
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                marginTop="15%"
+              >
+                <StyledTextField
+                  label="Login"
+                  variant="filled"
+                  type="text"
+                  value={values.login}
+                  error={touched.login && Boolean(errors.login)}
+                  helperText={touched.login ? errors.login : ""}
+                  onChange={handleChange("login")}
+                  onBlur={handleBlur("login")}
+                />
 
-              <CustomTextField
-                label="Password"
-                variant="filled"
-                InputLabelProps={{
-                  style: { color: "#fff" },
-                }}
-                onChange={onPassChange}
-                value={formValue.password}
-              />
-            </ThemeProvider>
-          </Stack>
+                <StyledTextField
+                  label="Password"
+                  variant="filled"
+                  type="password"
+                  value={values.password}
+                  error={touched.password && Boolean(errors.password)}
+                  helperText={touched.password ? errors.password : ""}
+                  onChange={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                />
 
-          <Stack
-            spacing={3}
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            style={{ padding: "30px" }}
-          >
-            <Button
-              size="large"
-              variant="contained"
-              onClick={navigateToWelcomePage}
-            >
-              Back
-            </Button>
-            <Button size="large" variant="contained" onClick={handleSubmit}>
-              Login
-            </Button>
-          </Stack>
+                <Stack spacing={3} direction="row">
+                  <StyledButton
+                    size="large"
+                    variant="contained"
+                    onClick={navigateToWelcomePage}
+                  >
+                    Back
+                  </StyledButton>
+                  <StyledButton size="large" variant="contained" type="submit">
+                    Login
+                  </StyledButton>
+                </Stack>
 
-          <p>you don't have account?</p>
-          <p>you don't remember your password?</p>
-        </div>
-      </div>
-    </>
+                <Stack
+                  spacing={-2}
+                  direction="column"
+                  textAlign="right"
+                  sx={{ color: "#fff" }}
+                >
+                  <p>you don't have account?</p>
+                  <p>you don't remember your password?</p>
+                </Stack>
+              </Stack>
+            </form>
+          );
+        }}
+      </Formik>
+    </StyledBackground>
   );
 };
-{
-  /* <p>login field</p>
-          <p>password field</p>
-          <p>logi button</p>
-          <p>back button</p>
-          <p>you don't have account?</p>
-          <p>you don't remember your password?</p> */
-}

@@ -1,51 +1,49 @@
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./WelcomePage.module.scss";
+import {
+  StyledButton,
+  WelcomeBackground,
+  WelcomeButtonAnimation,
+  WelcomeTextAnimation,
+} from "../../../shared/StyledComponents";
 
 export const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
-
-  const navigateToLoginPage = () => {
-    navigate("/login");
-  };
 
   const navigateToRegisterPage = () => {
     navigate("/register");
   };
 
-  return (
-    <>
-      <div className={styles.backgroundPlace}>
-        <div className={styles.welcomeText}>
-          <h1>Welcome to Guild Place </h1>
-          <h3>Lorem Ipsum polskie smiecie </h3>
-        </div>
+  const navigateToLoginPage = () => {
+    navigate("/login");
+  };
 
-        <div className={styles.welcomeButtons}>
-          <Stack
-            spacing={2}
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-end"
-          >
-            <Button
-              variant="contained"
-              size="large"
-              onClick={navigateToRegisterPage}
-            >
-              REGISTER
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={navigateToLoginPage}
-            >
-              LOGIN
-            </Button>
-          </Stack>
-        </div>
-      </div>
-    </>
+  return (
+    <WelcomeBackground>
+      <WelcomeTextAnimation>
+        <h1>Welcome to Guild Place </h1>
+        <h3>
+          Guild Place is an application created with gamers in mind, where we
+          want to bring you all of the neccessary features to organize your
+          guild!
+        </h3>
+      </WelcomeTextAnimation>
+      <WelcomeButtonAnimation>
+        <Stack
+          spacing={3}
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-end"
+        >
+          <StyledButton variant="contained" onClick={navigateToRegisterPage}>
+            REGISTER
+          </StyledButton>
+          <StyledButton variant="contained" onClick={navigateToLoginPage}>
+            LOGIN
+          </StyledButton>
+        </Stack>
+      </WelcomeButtonAnimation>
+    </WelcomeBackground>
   );
 };
